@@ -28,9 +28,21 @@ def home():
     return "<h1> Hello World</h1>"
 
 
-@app.route('/api/v1/resources/books/all', methods=['GET'])
-def api_all():
-    return jsonify(books)
+@app.route('/api/v1/resources/books', methods=['GET'])
+def api_id():
+    if 'id' in request.args:
+        id = int(request.args['id'])
+    else:
+        return "No field provided. Please specify id"
+
+    results = []
+
+    for book in books:
+        if book['id'] == id:
+            results.append(book)
+
+
+    return jsonify(book)
 
 
 app.run(debug=True)
